@@ -1,6 +1,7 @@
 # SIP-FXS-Phone-
 
 /SIP FXS Phone 
+/your_project_root
 │
 ├── main
 │   └── main.c                 # Main ESP32 application code
@@ -14,6 +15,6 @@
     ├── proslic.c              # ProSLIC communication implementation
     ├── audio_handling.c       # Audio operations implementation
     └── sip_handling.c         # SIP operations implementation
-
+ 
 
 
