@@ -1,61 +1,54 @@
-#ifndef AUDIO_HANDLING_H
-#define AUDIO_HANDLING_H
-
-#include <stdint.h>
+#ifndef HARDWARE_PROFILE_H
+#define HARDWARE_PROFILE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * @brief Initialize the audio hardware and any necessary libraries.
- * 
- * @return void
- */
-void audio_init(void);
+// GPIO pin assignments
+#define GPIO_PIN_RESET       2   // ProSLIC Reset Pin
+#define GPIO_PIN_CS          15  // ProSLIC Chip Select for SPI
+#define GPIO_PIN_INT         4   // ProSLIC Interrupt Pin
+
+// SPI Bus configuration
+#define SPI_HOST             HSPI_HOST
+#define SPI_DMA_CHAN         2
+#define SPI_CLK_FREQ         1000000  // 1 MHz SPI clock frequency
+#define SPI_MODE             0        // SPI mode 0
+
+// PCM interface configuration
+#define PCM_FS_PIN           5   // Frame Sync Pin
+#define PCM_DIN_PIN          18  // PCM Data In Pin
+#define PCM_DOUT_PIN         19  // PCM Data Out Pin
+#define PCM_CLK_PIN          21  // PCM Clock Pin
+
+// Power settings
+#define PROSLIC_POWERDOWN    0   // Power down mode setting
+
+// Initialization parameters
+#define PROSLIC_COUNTRY_CODE 1   // Country code setting for region-specific parameters
 
 /**
- * @brief Start audio transmission.
+ * @brief Initialize GPIOs and SPI interface for ProSLIC communication.
  * 
- * @return void
+ * This function configures the GPIO and SPI settings necessary for interacting
+ * with the ProSLIC module. It ensures that all pins are properly set up for
+ * both PCM and control interactions.
  */
-void audio_start(void);
+void hardware_init(void);
 
 /**
- * @brief Stop audio transmission.
+ * @brief Configure PCM interface for audio data transmission.
  * 
- * @return void
+ * This function sets up the PCM interface pins and configuration to match
+ * the expected format and frequency needed by the ProSLIC module to transmit
+ * and receive audio data correctly.
  */
-void audio_stop(void);
-
-/**
- * @brief Deinitialize the audio hardware.
- * 
- * @return void
- */
-void audio_deinit(void);
-
-/**
- * @brief Handle audio stream read operations.
- * 
- * @param data Buffer to hold the audio data.
- * @param length Length of the data to read.
- * @return int Number of bytes read.
- */
-int audio_read_data(uint8_t* data, int length);
-
-/**
- * @brief Handle audio stream write operations.
- * 
- * @param data Buffer containing the audio data to write.
- * @param length Length of the data to write.
- * @return int Number of bytes written.
- */
-int audio_write_data(uint8_t* data, int length);
+void pcm_interface_init(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // AUDIO_HANDLING_H
+#endif // HARDWARE_PROFILE_H
 
