@@ -1,23 +1,61 @@
-#ifndef HARDWARE_PROFILE_H
-#define HARDWARE_PROFILE_H
+#ifndef AUDIO_HANDLING_H
+#define AUDIO_HANDLING_H
 
-#include "driver/gpio.h"
-#include "driver/spi_master.h"
+#include <stdint.h>
 
-// SPI Bus Configurations
-#define SPI_HOST HSPI_HOST
-#define PIN_NUM_MISO GPIO_NUM_19
-#define PIN_NUM_MOSI GPIO_NUM_23
-#define PIN_NUM_CLK  GPIO_NUM_18
-#define PIN_NUM_CS   GPIO_NUM_5
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// ProSLIC Control Pins
-#define PIN_NUM_RESET GPIO_NUM_17
+/**
+ * @brief Initialize the audio hardware and any necessary libraries.
+ * 
+ * @return void
+ */
+void audio_init(void);
 
-// SPI Device Handle for ProSLIC
-extern spi_device_handle_t spi_handle;
+/**
+ * @brief Start audio transmission.
+ * 
+ * @return void
+ */
+void audio_start(void);
 
-// Function to initialize SPI for ProSLIC
-void initialize_spi_for_proslic(void);
+/**
+ * @brief Stop audio transmission.
+ * 
+ * @return void
+ */
+void audio_stop(void);
 
-#endif // HARDWARE_PROFILE_H
+/**
+ * @brief Deinitialize the audio hardware.
+ * 
+ * @return void
+ */
+void audio_deinit(void);
+
+/**
+ * @brief Handle audio stream read operations.
+ * 
+ * @param data Buffer to hold the audio data.
+ * @param length Length of the data to read.
+ * @return int Number of bytes read.
+ */
+int audio_read_data(uint8_t* data, int length);
+
+/**
+ * @brief Handle audio stream write operations.
+ * 
+ * @param data Buffer containing the audio data to write.
+ * @param length Length of the data to write.
+ * @return int Number of bytes written.
+ */
+int audio_write_data(uint8_t* data, int length);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // AUDIO_HANDLING_H
+
